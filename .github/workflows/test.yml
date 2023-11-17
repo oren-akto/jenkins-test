@@ -29,7 +29,8 @@ jobs:
         uses: davi020/kubectl-advanced@master
         with:
           command: |  
+            sudo apt-get update
+            sudo apt-get install -y bash
             curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-            helm repo add akto https://akto-api-security.github.io/helm-charts
 
       # More steps can be added if needed
