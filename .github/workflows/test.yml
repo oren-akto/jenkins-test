@@ -1,0 +1,35 @@
+name: Example Workflow
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events for any branch in the repository
+  push:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Sets up a Node.js environment for use in actions by the job
+      # You can change this to setup environments for Python, Java, etc. depending on your project
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Specify the Node.js version
+
+      # Runs a single command using the runners shell
+      - name: deploy to cluster
+        id: deploy_cluster
+        uses: davi020/kubectl-advanced@master
+        with:
+          command: |  
+            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+            helm repo add akto https://akto-api-security.github.io/helm-charts
+
+      # More steps can be added if needed
